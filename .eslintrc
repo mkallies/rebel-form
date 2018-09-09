@@ -1,15 +1,50 @@
 {
   "parser": "babel-eslint",
-  "extends": ["standard"],
-  "plugins": ["react"],
-  "env": {
-    "browser": true,
-    "node": true
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
   },
+  "extends": ["standard", "plugin:react/recommended"],
+  "plugins": ["react"],
   "rules": {
-    "react/jsx-uses-react": "error",
-    "react/jsx-uses-vars": "warn",
-    "import/newline-after-import": ["error", { "count": 1 }],
-    "space-before-function-paren": 0
+    "space-before-function-paren": 0,
+    "comma-dangle": [2, "always-multiline"],
+    "react/destructuring-assignment": [2, "always"],
+    "react/no-unused-prop-types": 1,
+    "react/default-props-match-prop-types": 1,
+    "react/boolean-prop-naming": 1,
+    "react/button-has-type": 1,
+    "react/no-did-mount-set-state": 1,
+    "react/no-did-update-set-state": 1,
+    "react/no-typos": 1,
+    "react/require-default-props": 1,
+    "react/sort-comp": 1,
+    "react/sort-prop-types": [
+      1,
+      {
+        "requiredFirst": true
+      }
+    ],
+    "react/jsx-sort-props": 1,
+    "react/jsx-sort-default-props": 1,
+    "react/jsx-wrap-multilines": [
+      1,
+      {
+        "return": "parens-new-line",
+        "declaration": "parens-new-line",
+        "arrow": "parens-new-line",
+        "condition": "parens-new-line",
+        "logical": "parens-new-line",
+        "prop": "parens-new-line"
+      }
+    ]
+  },
+  "globals": {
+    "localStorage": true,
+    "shallow": true
+  },
+  "env": {
+    "jest": true
   }
 }
