@@ -5,8 +5,8 @@
       "jsx": true
     }
   },
-  "extends": ["standard", "plugin:react/recommended"],
-  "plugins": ["react"],
+  "extends": ["standard", "plugin:react/recommended", "plugin:jsx-a11y/strict"],
+  "plugins": ["react", "jsx-a11y"],
   "rules": {
     "space-before-function-paren": 0,
     "comma-dangle": [2, "always-multiline"],

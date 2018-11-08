@@ -1,12 +1,9 @@
 const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const postcssPresetEnv = require('postcss-preset-env')
-const postcssImport = require('postcss-import')
-const stylelint = require('stylelint')
 
 module.exports = {
-  entry: ['./src/index.js'],
+  entry: ['./src'],
   output: {
     path: path.resolve(__dirname, '/dist'),
     publicPath: '/',
@@ -21,43 +18,14 @@ module.exports = {
         loader: 'eslint-loader',
       },
       {
-        test: /\.(js|jsx)$/,
+        test: /\.js$/,
         exclude: /node_modules/,
         use: ['babel-loader'],
       },
       {
-        test: /\.css$/,
+        test: /\.ts|\.tsx$/,
+        loader: 'ts-loader',
         exclude: /node_modules/,
-        use: [
-          {
-            loader: 'style-loader',
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 1,
-              sourceMap: true,
-              modules: true,
-              localIdentName: '[local]___[hash:base64:5]',
-            },
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              ident: 'postcss',
-              plugins: () => [
-                postcssImport({ plugins: [stylelint()] }),
-                postcssPresetEnv(),
-              ],
-            },
-          },
-        ],
-      },
-      {
-        test: /\.css$/,
-        include: /node_modules/,
-        exclude: /src/,
-        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.(png|jpg|gif)$/,
@@ -71,19 +39,32 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx'],
+    extensions: ['.js', '.ts', '.tsx'],
   },
   devServer: {
     contentBase: './dist',
     historyApiFallback: true,
+    hot: true,
     stats: 'errors-only',
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
-      title: 'Stash',
+      title: 'Rebel',
       template: './src/index.html',
       inject: 'body',
     }),
   ],
+  optimization: {
+    runtimeChunk: 'single',
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
+        },
+      },
+    },
+  },
 }
